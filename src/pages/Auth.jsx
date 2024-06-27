@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
+// TODO - upnext you have to check user is verified or not. If verified then redirect to /post-login else redirect to /auth/verify-email
+
+import React, { useContext, useState } from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri'
 import { Loader } from '../components/BootstrapModals'
+import axios from 'axios'
+import GenralContext from '../context/GenralContext'
+import toast from 'react-hot-toast'
+
 
 const Auth = () => {
+
+    const { backendHost, handleOnChange } = useContext(GenralContext)
 
     const [authType, setAuthType] = useState('LOGIN')
     const toggleAuth = () => {
@@ -15,28 +23,43 @@ const Auth = () => {
         }
     }
 
-    const [pass, setPass] = useState(true)
-    const [rePass, setRePass] = useState(true)
-
+    const [passEye, setPassEye] = useState(true)
     const [formProcess, setFormProcess] = useState(false)
     const [formStatus, setFormStatus] = useState('Sign in ...')
-    const handleFormSubmit = (e) => {
+
+    const [formData, setFormData] = useState({})
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
             setFormProcess(true)
+
             setFormStatus(authType === "LOGIN" ? "Sign in ..." : "Sending very link on your mail ...")
 
-            if (authType === 'LOGIN') {
-                // TODO - API call for login
-            } else { 
-                // TODO - API call for register
+            let response = await axios.post(`${backendHost}/api/auth/manual/${authType === 'LOGIN' ? 'login' : 'register'}`, formData, {
+                headers: {
+                    'content-type': 'application/json'
+                },
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                toast.success("Login Success")
+            } else if (response.status === 201) {
+                toast.success("Account registration success")
+            } else {
+                toast.error("Server Error")
             }
 
         } catch (error) {
 
+            setFormProcess(false)
+            toast.error(error?.response?.data)
+
         } finally {
-            
+            setTimeout(() => {
+                setFormProcess(false)
+            }, 1500);
         }
     }
 
@@ -54,16 +77,44 @@ const Auth = () => {
                             }
                         </h1>
                         <form className="tw-space-y-4 md:tw-space-y-6" onSubmit={handleFormSubmit}>
-                            <div>
-                                <label htmlFor="email" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Your email</label>
-                                <input type="email" name="email" id="email" className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" placeholder="name@company.com" />
+                            <div className={authType === 'REGISTER' ? 'tw-block' : 'tw-hidden'}>
+                                <label htmlFor="name" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
+                                    placeholder="Sample Name"
+                                    onChange={(e) => { handleOnChange(e, formData, setFormData) }}
+                                />
                             </div>
+
+                            <div>
+                                <label htmlFor="email" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
+                                    placeholder="name@company.com"
+                                    onChange={(e) => { handleOnChange(e, formData, setFormData) }}
+                                />
+                            </div>
+
                             <div>
                                 <label htmlFor="password" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Password</label>
                                 <div className='tw-relative tw-flex tw-items-center tw-justify-end'>
-                                    <input type={pass === true ? 'password' : 'text'} name="password" id="password" placeholder="••••••••" className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" autoComplete="on" />
-                                    <button type="button" className='tw-absolute tw-px-3 tw-h-full tw-text-xl tw-outline-none tw-text-neutral-400 focus:tw-text-neutral-50' onClick={() => { setPass(!pass) }} disabled={formProcess}>
-                                        {pass === true ?
+                                    <input
+                                        type={passEye === true ? 'password' : 'text'}
+                                        name="password"
+                                        id="password"
+                                        placeholder="••••••••"
+                                        className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
+                                        autoComplete="on"
+                                        onChange={(e) => { handleOnChange(e, formData, setFormData) }}
+                                    />
+                                    <button type="button" className='tw-absolute tw-px-3 tw-h-full tw-text-xl tw-outline-none tw-text-neutral-400 focus:tw-text-neutral-50' onClick={() => { setPassEye(!passEye) }} disabled={formProcess}>
+                                        {passEye === true ?
                                             <RiEyeCloseFill />
                                             :
                                             <RiEyeFill />
@@ -71,19 +122,7 @@ const Auth = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className={authType === 'REGISTER' ? 'tw-block' : 'tw-hidden'}>
-                                <label htmlFor="repassword" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Re-enter Password</label>
-                                <div className='tw-relative tw-flex tw-items-center tw-justify-end'>
-                                    <input type={rePass === true ? 'password' : 'text'} name="re-password" id="repassword" placeholder="••••••••" className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500" autoComplete="on" />
-                                    <button type="button" className='tw-absolute tw-px-3 tw-h-full tw-text-xl tw-outline-none tw-text-neutral-400 focus:tw-text-neutral-50' onClick={() => { setRePass(!rePass) }} disabled={formProcess}>
-                                        {rePass === true ?
-                                            <RiEyeCloseFill />
-                                            :
-                                            <RiEyeFill />
-                                        }
-                                    </button>
-                                </div>
-                            </div>
+
                             {authType === 'LOGIN' &&
                                 <div className="tw-flex tw-items-center tw-justify-between">
                                     <div className="tw-flex tw-items-start">
@@ -97,7 +136,15 @@ const Auth = () => {
                                     <a href="#" className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-px-3 tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none">Forgot password?</a>
                                 </div>
                             }
-                            <button type="submit" className="tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800">Sign in</button>
+
+                            <button type="submit" className={`tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800`}>
+                                {authType === 'LOGIN' ?
+                                    <>Sign in</>
+                                    :
+                                    <>Register</>
+                                }
+                            </button>
+
                             <p className="tw-text-sm tw-font-light tw-text-gray-500 dark:tw-text-gray-400 tw-text-center">
                                 {authType === 'LOGIN' ?
                                     `Don't have an account yet?`
