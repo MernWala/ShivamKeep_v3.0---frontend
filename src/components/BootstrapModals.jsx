@@ -23,3 +23,45 @@ export const Loader = ({ show, text }) => {
         </>
     );
 }
+
+
+export const FullScreenModal = ({
+    show,
+    setShow,
+    title,
+    tags,
+    notes
+}) => {
+
+    return (
+        <Modal show={show} onHide={() => setShow({ show: false })} size={'lg'} centered={true} scrollable={true} className={`tw-rounded-lg`}>
+            <Modal.Header closeButton className={`tw-bg-indigo-950 py-2 tw-text-white`}>
+                <Modal.Title>
+                    {title ? title : 'Your Note'}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className={`tw-bg-neutral-50`}>
+
+                <div>
+                    <span className="tw-font-semibold tw-text-lg tw-text-indigo-800">
+                        {title}
+                    </span>
+                </div>
+
+                <div className={`${tags && 'tw-mb-4'}`}>
+                    {notes}
+                </div>
+
+                <div className="tw-w-full">
+                    <div className='tw-flex flex-wrap gap-2'>
+                        {tags?.map((tag, idx) => {
+                            return (
+                                <span key={`full-screen-${tag}-${idx}`} className="tw-cursor-default tw-px-2 tw-py-1 tw-bg-indigo-900 tw-rounded-sm tw-text-xs tw-uppercase tw-text-white before:tw-content-['#'] before:tw-inline-block before:tw-me-1">{tag}</span>
+                            )
+                        })}
+                    </div>
+                </div>
+            </Modal.Body>
+        </Modal>
+    );
+}

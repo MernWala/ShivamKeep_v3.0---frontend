@@ -6,6 +6,7 @@ import VerifyOtp from './pages/account/OTP_verification'
 import ChangePassword from './pages/account/ChangePassword'
 import GenralState from './context/GenralState'
 import { Toaster } from 'react-hot-toast'
+import ShareMode from './pages/ShareMode'
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
               <Route path={"verify-email"} element={<VerifyOtp />} />
               <Route path={"change-password/:token"} element={<ChangePassword />} />
             </Route>
+            <Route path={'/shared-notes/:_id'} element={<ShareMode />} />
           </Routes>
         </GenralState>
       </HashRouter>

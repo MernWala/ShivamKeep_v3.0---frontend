@@ -1,6 +1,6 @@
 // TODO - upnext you have to check user is verified or not. If verified then redirect to /post-login else redirect to /auth/verify-email
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri'
@@ -8,11 +8,32 @@ import { Loader } from '../components/BootstrapModals'
 import axios from 'axios'
 import GenralContext from '../context/GenralContext'
 import toast from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const Auth = () => {
 
+    const navigate = useNavigate()
     const { backendHost, handleOnChange } = useContext(GenralContext)
+
+    useEffect(() => {
+        (async () => {
+
+            try {
+                let response = await axios.post(`${backendHost}/api/auth/get-user`, {}, {
+                    withCredentials: true
+                })
+
+                if (response.status === 200) {
+                    navigate('/post-login')
+                }
+            } catch (error) {
+                console.error(error)
+                console.log("Token Not Found");
+            }
+
+        })();
+    }, [backendHost, navigate])
 
     const [authType, setAuthType] = useState('LOGIN')
     const toggleAuth = () => {
@@ -44,7 +65,10 @@ const Auth = () => {
             });
 
             if (response.status === 200) {
+
                 toast.success("Login Success")
+                navigate('/post-login')
+
             } else if (response.status === 201) {
                 toast.success("Account registration success")
             } else {
@@ -125,15 +149,7 @@ const Auth = () => {
 
                             {authType === 'LOGIN' &&
                                 <div className="tw-flex tw-items-center tw-justify-between">
-                                    <div className="tw-flex tw-items-start">
-                                        <div className="tw-flex tw-items-center tw-h-5">
-                                            <input id="remember" aria-describedby="remember" type="checkbox" className="focus:tw-ring-1 focus:tw-outline-none focus:tw-border-primary-600 tw-w-4 tw-h-4 tw-border tw-border-gray-300 tw-rounded tw-bg-gray-50 focus:tw-ring-3 focus:tw-ring-primary-300 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:focus:tw-ring-primary-600 dark:tw-ring-offset-gray-800" />
-                                        </div>
-                                        <div className="tw-ml-3 tw-text-sm">
-                                            <label htmlFor="remember" className="tw-text-gray-500 dark:tw-text-gray-300">Remember me</label>
-                                        </div>
-                                    </div>
-                                    <a href="#" className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-px-3 tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none">Forgot password?</a>
+                                    <Link to="/" className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-px-3 tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none">Forgot password?</Link>
                                 </div>
                             }
 

@@ -9,8 +9,26 @@ const GenralState = (props) => {
         setState({ ...state, [e.target.name]: e.target.value })
     }
 
+    const [userDetails, setUserDetails] = useState({})
+
+    const [notes, setNotes] = useState([])
+
+    const [modifyNotes, setModifyNotes] = useState()
+
+    const [fullScreenInfo, setfullScreenInfo] = useState()
+
+    const [Offcanvas, setOffcanvas] = useState(false)
+
+    const [loaderData, setLoaderData] = useState({})
+
     return (
-        <GenralContext.Provider value={{ backendHost, handleOnChange }}>
+        <GenralContext.Provider value={
+            {
+                backendHost, handleOnChange, userDetails, setUserDetails, notes, setNotes, modifyNotes,
+                setModifyNotes, fullScreenInfo, setfullScreenInfo, Offcanvas, setOffcanvas, loaderData,
+                setLoaderData
+            }
+        }>
             {props.children}
         </GenralContext.Provider>
     )

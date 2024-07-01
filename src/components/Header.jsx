@@ -1,27 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaNoteSticky } from "react-icons/fa6";
-import { MdOutlineNightsStay } from 'react-icons/md';
-import { WiDaySunny } from 'react-icons/wi';
 import Avatar from './Avatar';
 import { NavLink } from 'react-router-dom'
+import ShareButton from './ShareButton';
 
-const Header = () => {
+const Header = ({
 
-    const [theme, setTheme] = useState({
-        effect: 'dark'
-    })
+    shareMode = false,
+    sharedModeUser
 
-    const toggleTheme = () => {
-        if (theme?.effect === 'light') {
-            setTheme({
-                effect: 'dark'
-            })
-        } else {
-            setTheme({
-                effect: 'light'
-            })
-        }
-    }
+}) => {
 
     return (
         <header className="tw-text-gray-600 tw-body-font tw-border-b tw-shadow-sm tw-bg-neutral-50 tw-sticky tw-top-0 tw-z-10">
@@ -32,19 +20,22 @@ const Header = () => {
                 </NavLink>
 
                 <div className="tw-ml-auto tw-flex tw-items-center tw-gap-1">
-                    <div className="tw-bg-indigo-900 tw-p-[11px] tw-rounded-full tw-shadow-md tw-shadow-neutral-100 tw-outline-none" onClick={toggleTheme}>
-                        {theme?.effect === 'light' ?
-                            <MdOutlineNightsStay size={25} className='tw-text-white' />
-                            :
-                            <WiDaySunny size={25} className='tw-text-white' />
-                        }
-                    </div>
-                    <div className={'tw-rounded-full tw-flex tw-align-middle tw-outline-none'}>
-                        <Avatar user={''} />
-                    </div>
+                    {shareMode && sharedModeUser ?
+                        <div className={'tw-rounded-full tw-flex tw-items-center tw-outline-none'}>
+                            <span className={'tw-mx-1 tw-outline-none focus:tw-ring-2 tw-ring-indigo-600 tw-bg-indigo-900 tw-px-4 tw-py-2 tw-rounded-full tw-font-semibold tw-text-neutral-50 tw-flex tw-items-center gap-1'}>
+                                {sharedModeUser?.name}'s Notes
+                            </span>
+                        </div>
+                        :
+                        <div className={'tw-rounded-full tw-flex tw-items-center tw-outline-none'}>
+                            <ShareButton />
+                            <Avatar user={''} />
+                        </div>
+                    }
+
                 </div>
             </div>
-        </header>
+        </header >
     )
 }
 
