@@ -37,7 +37,6 @@ const NotesOffcanvas = ({
         try {
             setFormProcess(true)
             if (modifyNotes) {
-
                 let response = await axios.put(`${backendHost}/api/notes`, { ...formData, tags }, {
                     withCredentials: true
                 })

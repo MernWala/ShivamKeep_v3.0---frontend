@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom'
 const Auth = () => {
 
     const navigate = useNavigate()
-    const { backendHost, handleOnChange } = useContext(GenralContext)
+    const { backendHost, handleOnChange, setRegistrationTempState } = useContext(GenralContext)
 
     useEffect(() => {
         (async () => {
@@ -55,7 +55,7 @@ const Auth = () => {
         try {
             setFormProcess(true)
 
-            setFormStatus(authType === "LOGIN" ? "Sign in ..." : "Sending very link on your mail ...")
+            setFormStatus(authType === "LOGIN" ? "Sign in ..." : "Registering account ...")
 
             let response = await axios.post(`${backendHost}/api/auth/manual/${authType === 'LOGIN' ? 'login' : 'register'}`, formData, {
                 headers: {
@@ -71,6 +71,8 @@ const Auth = () => {
 
             } else if (response.status === 201) {
                 toast.success("Account registration success")
+                setRegistrationTempState(formData?.email)
+                navigate('/account/verify-email')
             } else {
                 toast.error("Server Error")
             }
@@ -78,7 +80,6 @@ const Auth = () => {
         } catch (error) {
 
             setFormProcess(false)
-            toast.error(error?.response?.data)
 
         } finally {
             setTimeout(() => {

@@ -21,12 +21,16 @@ const GenralState = (props) => {
 
     const [loaderData, setLoaderData] = useState({})
 
+    const [editProfile, setEditProfile] = useState({})
+
+    const [registrationTempState, setRegistrationTempState] = useState()
+
     return (
         <GenralContext.Provider value={
             {
                 backendHost, handleOnChange, userDetails, setUserDetails, notes, setNotes, modifyNotes,
                 setModifyNotes, fullScreenInfo, setfullScreenInfo, Offcanvas, setOffcanvas, loaderData,
-                setLoaderData
+                setLoaderData, editProfile, setEditProfile, registrationTempState, setRegistrationTempState
             }
         }>
             {props.children}

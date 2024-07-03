@@ -43,8 +43,13 @@ const Home = () => {
                 }
 
             } catch (error) {
-                toast.error("Server error")
-                console.error(error);
+
+                if (error?.response?.data === "Token Not Found") {
+                    navigate('/')
+                } else {
+                    toast.error("Server error")
+                    console.error(error);
+                }
             }
 
         })();
