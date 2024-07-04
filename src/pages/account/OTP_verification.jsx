@@ -4,13 +4,13 @@ import { Spinner } from 'react-bootstrap'
 import GenralContext from '../../context/GenralContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Page = () => {
 
     let navigate = useNavigate()
 
-    const { registrationTempState, backendHost } = useContext(GenralContext)
+    const { registrationTempState, backendHost, isForgotPassword } = useContext(GenralContext)
 
     const [formProcess, setFormProcess] = useState(false)
     const [formState, setFormState] = useState('')
@@ -90,6 +90,41 @@ const Page = () => {
         }
     }
 
+    const handleForgotPassword = async (e) => {
+        e.preventDefault()
+
+        try {
+
+            setOtpState('Sending Mail')
+
+            let response = await axios.post(`${backendHost}/api/recover`, {
+                email: formData,
+                url: `http://localhost:3000/#/account/change-password`
+            })
+
+            if (response?.status === 201) {
+                toast.success("Check mail for password reset link")
+                setFormData()
+            }
+
+        } catch (error) {
+
+            if (error?.response?.status === 400) {
+                toast.error(error?.response?.data)
+            } else {
+                toast.error("Somthing went wrong")
+            }
+
+            console.error(error);
+        } finally {
+
+            setTimeout(() => {
+                setOtpState()
+            }, 300);
+
+        }
+    }
+
     return (
         <>
             <section className={`tw-bg-gray-50 dark:tw-bg-gray-900 tw-min-h-[100vh]`}>
@@ -99,7 +134,7 @@ const Page = () => {
                         <div className='tw-p-6 sm:tw-p-8 pb-0'>
                             <h1 className="tw-text-xl tw-mb-0 tw-font-semibold tw-leading-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white tw-tracking-wider">Enter your email</h1>
                         </div>
-                        <form className={`tw-p-6 tw-space-y-5 md:tw-space-y-7 sm:tw-p-8 ${otpDetails && 'pb-0'}`} onSubmit={handleSendOTP}>
+                        <form className={`tw-p-6 tw-space-y-5 md:tw-space-y-7 sm:tw-p-8 ${otpDetails && 'pb-0'}`} onSubmit={isForgotPassword === true ? handleForgotPassword : handleSendOTP}>
                             <div className='tw-space-y-2 md:tw-space-y-3'>
                                 <div>
                                     <input
@@ -114,12 +149,12 @@ const Page = () => {
                                 </div>
                                 <div className={otpDetails ? 'tw-hidden' : 'tw-block'}>
                                     <button type="submit" className="tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800" disabled={formProcess}>
-                                        {otpState ?
+                                        {otpState?.length > 0 ?
                                             <span className='tw-flex tw-items-center tw-gap-2 tw-justify-center'>
                                                 <Spinner animation="border" variant="light" size='sm' /> {otpState}
                                             </span>
                                             :
-                                            <span>Send OTP</span>
+                                            <span>Submit</span>
                                         }
                                     </button>
                                 </div>

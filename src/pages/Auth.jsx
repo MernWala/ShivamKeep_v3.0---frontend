@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom'
 const Auth = () => {
 
     const navigate = useNavigate()
-    const { backendHost, handleOnChange, setRegistrationTempState } = useContext(GenralContext)
+    const { backendHost, handleOnChange, setRegistrationTempState, setIsForgotPassword } = useContext(GenralContext)
 
     useEffect(() => {
         (async () => {
@@ -88,6 +88,11 @@ const Auth = () => {
         }
     }
 
+    const handleForgotPassword = () => { 
+        setIsForgotPassword(true)
+        navigate('/account/verify-email')
+    }
+
     return (
         <section className={`tw-bg-gray-50 dark:tw-bg-gray-900 tw-min-h-[100vh] ${authType === 'REGISTER' && 'tw-py-10'}`}>
             <Loader show={formProcess} text={formStatus} />
@@ -150,7 +155,13 @@ const Auth = () => {
 
                             {authType === 'LOGIN' &&
                                 <div className="tw-flex tw-items-center tw-justify-between">
-                                    <Link to="/" className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-px-3 tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none">Forgot password?</Link>
+                                    <button
+                                        type="button"
+                                        className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-px-3 tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none"
+                                        onClick={handleForgotPassword}
+                                    >
+                                        Forgot password?
+                                    </button>
                                 </div>
                             }
 

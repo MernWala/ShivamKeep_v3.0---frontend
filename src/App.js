@@ -23,7 +23,7 @@ const App = () => {
             <Route path={"/account"}>
               <Route path="" element={<>account default page</>} />
               <Route path={"verify-email"} element={<VerifyOtp />} />
-              <Route path={"change-password/:token"} element={<ChangePassword />} />
+              <Route path={"change-password"} element={<ChangePassword />} />
             </Route>
             <Route path={'/shared-notes/:_id'} element={<ShareMode />} />
           </Routes>

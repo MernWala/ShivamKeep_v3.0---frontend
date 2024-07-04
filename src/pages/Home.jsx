@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import NewBtn from '../components/NewBtn'
 import Notes from '../components/Notes'
 import Header from '../components/Header'
@@ -8,7 +8,6 @@ import GenralContext from '../context/GenralContext'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { FullScreenModal, Loader } from '../components/BootstrapModals'
-import ShareButton from '../components/ShareButton'
 
 const Home = () => {
 
@@ -53,7 +52,7 @@ const Home = () => {
             }
 
         })();
-
+        // eslint-disable-next-line
     }, [backendHost])
 
 
@@ -76,7 +75,7 @@ const Home = () => {
             }
         })();
 
-    }, [userDetails, backendHost])
+    }, [userDetails, backendHost, setNotes])
 
 
     return (

@@ -25,12 +25,15 @@ const GenralState = (props) => {
 
     const [registrationTempState, setRegistrationTempState] = useState()
 
+    const [isForgotPassword, setIsForgotPassword] = useState(false)
+
     return (
         <GenralContext.Provider value={
             {
                 backendHost, handleOnChange, userDetails, setUserDetails, notes, setNotes, modifyNotes,
                 setModifyNotes, fullScreenInfo, setfullScreenInfo, Offcanvas, setOffcanvas, loaderData,
-                setLoaderData, editProfile, setEditProfile, registrationTempState, setRegistrationTempState
+                setLoaderData, editProfile, setEditProfile, registrationTempState, setRegistrationTempState,
+                isForgotPassword, setIsForgotPassword
             }
         }>
             {props.children}
