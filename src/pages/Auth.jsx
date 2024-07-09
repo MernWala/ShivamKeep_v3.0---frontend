@@ -1,5 +1,3 @@
-// TODO - upnext you have to check user is verified or not. If verified then redirect to /post-login else redirect to /auth/verify-email
-
 import React, { useContext, useEffect, useState } from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
@@ -8,7 +6,7 @@ import { Loader } from '../components/BootstrapModals'
 import axios from 'axios'
 import GenralContext from '../context/GenralContext'
 import toast from 'react-hot-toast'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 const Auth = () => {
