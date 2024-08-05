@@ -3,7 +3,8 @@ import GenralContext from './GenralContext'
 
 const GenralState = (props) => {
 
-    const [backendHost] = useState('http://localhost:3001')
+    // const [backendHost] = useState('http://localhost:3001')
+    const [backendHost] = useState('https://shivamkeep-v3-0-backend.onrender.com')
 
     const handleOnChange = (e, state, setState) => {
         setState({ ...state, [e.target.name]: e.target.value })
