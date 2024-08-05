@@ -4,7 +4,7 @@ import { Spinner } from 'react-bootstrap'
 import GenralContext from '../../context/GenralContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Page = () => {
 

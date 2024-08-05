@@ -45,7 +45,7 @@ const ShareMode = () => {
             }
         })();
 
-    }, [backendHost])
+    }, [backendHost, params?._id])
 
     return (
         <>

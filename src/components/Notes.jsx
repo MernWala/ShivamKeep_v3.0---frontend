@@ -23,7 +23,7 @@ const Notes = ({
         if (string?.length > 130) {
             setString(string?.substr(0, 130) + " ... ")
         }
-    }, [])
+    }, [string])
 
     const handleSetFullScreen = () => {
         setfullScreenInfo({

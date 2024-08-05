@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
-import { Offcanvas, Toast } from 'react-bootstrap'
+import React, { useContext, useState, useRef } from 'react'
+import { Offcanvas } from 'react-bootstrap'
 import GenralContext from '../context/GenralContext'
 import { MdEdit } from 'react-icons/md'
 import axios from 'axios'

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { FaNoteSticky } from "react-icons/fa6";
 import Avatar from './Avatar';
 import { NavLink } from 'react-router-dom'
 import ShareButton from './ShareButton';
-import GenralContext from '../context/GenralContext';
 
 const Header = ({
 
@@ -11,8 +10,6 @@ const Header = ({
     sharedModeUser
 
 }) => {
-
-    const { userDetails } = useContext(GenralContext)
 
     return (
         <header className="tw-text-gray-600 tw-body-font tw-border-b tw-shadow-sm tw-bg-neutral-50 tw-sticky tw-top-0 tw-z-10">
