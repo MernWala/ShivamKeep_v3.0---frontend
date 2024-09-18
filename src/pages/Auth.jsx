@@ -70,13 +70,13 @@ const Auth = () => {
             } else if (response.status === 201) {
                 toast.success("Account registration success")
                 setRegistrationTempState(formData?.email)
-                navigate('/account/verify-email')
+                navigate(`/account/verify-email?access=VerifyAccount&email=${formData?.email}`)
             } else {
                 toast.error("Server Error")
             }
 
         } catch (error) {
-
+            toast.error(error?.response?.data ?? error?.message)
             setFormProcess(false)
 
         } finally {
@@ -86,15 +86,15 @@ const Auth = () => {
         }
     }
 
-    const handleForgotPassword = () => { 
+    const handleForgotPassword = () => {
         setIsForgotPassword(true)
-        navigate('/account/verify-email')
+        navigate(`/account/verify-email?access=AccountRecovery${formData?.email ? `&email=${formData?.email}` : ''}`)
     }
 
     return (
         <section className={`tw-bg-gray-50 dark:tw-bg-gray-900 tw-min-h-[100vh] ${authType === 'REGISTER' && 'tw-py-10'}`}>
             <Loader show={formProcess} text={formStatus} />
-            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto md:tw-h-screen lg:tw-py-0">
+            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto">
                 <div className="tw-w-full tw-rounded-lg tw-shadow dark:tw-border md:tw-mt-0 sm:tw-max-w-md tw-xl:p-0 dark:tw-bg-gray-800 dark:tw-border-gray-700">
                     <div className="tw-p-6 tw-space-y-4 md:tw-space-y-6 sm:tw-p-8">
                         <h1 className="tw-text-center tw-text-xl tw-font-bold tw-leading-tight tw-tracking-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white">
@@ -192,8 +192,8 @@ const Auth = () => {
                                 <p className='tw-m-0 tw-w-[25%] tw-bg-white tw-border'></p>
                             </div>
 
-                            <div className='tw-flex'>
-                                <div className="tw-w-1/2">
+                            <div className='tw-flex tw-flex-wrap'>
+                                <div className="md:tw-w-1/2 tw-w-full">
                                     <div className="tw-p-2">
                                         <button type='button' className='tw-capitalize tw-flex tw-gap-1 tw-text-sm tw-items-center tw-justify-center tw-bg-gray-50 focus:tw-outline-none tw-border-2 tw-border-transparent tw-border-gray-300 tw-text-neutral-50 tw-rounded-lg tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 focus:tw-border-primary-600'>
                                             continue with
@@ -201,7 +201,7 @@ const Auth = () => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="tw-w-1/2">
+                                <div className="md:tw-w-1/2 tw-w-full">
                                     <div className="tw-p-2">
                                         <button type='button' className='tw-capitalize tw-flex tw-gap-1 tw-text-sm tw-items-center tw-justify-center tw-bg-gray-50 focus:tw-outline-none tw-border-2 tw-border-transparent tw-border-gray-300 tw-text-neutral-50 tw-rounded-lg tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 focus:tw-border-primary-600'>
                                             continue with

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react'
-import { Offcanvas } from 'react-bootstrap'
+import { Offcanvas, Spinner } from 'react-bootstrap'
 import GenralContext from '../context/GenralContext'
 import { MdEdit } from 'react-icons/md'
 import axios from 'axios'
@@ -16,9 +16,10 @@ const EditProfileOffCanvas = ({
 
     const [nameData, setNameData] = useState(userDetails?.name)
 
+    const [isProcessing, setIsProcessing] = useState(null)
     const handleEditProfile = async (e) => {
         e.preventDefault();
-
+        setIsProcessing(true)
         try {
 
             if (nameData !== userDetails?.name) {
@@ -29,8 +30,9 @@ const EditProfileOffCanvas = ({
                     withCredentials: true
                 })
 
-                setUserDetails({ ...userDetails, name: nameResponse?.name })
+                setUserDetails({ ...userDetails, name: nameResponse?.data?.name })
                 setNameData(undefined)
+                toast.success(`Name changes to - ${nameResponse?.data?.name}`)
             }
 
         } catch (error) {
@@ -41,6 +43,8 @@ const EditProfileOffCanvas = ({
             }
 
             console.error(error);
+        } finally {
+            setIsProcessing(false)
         }
 
     }
@@ -138,7 +142,10 @@ const EditProfileOffCanvas = ({
                             </div>
 
                             <div>
-                                <button type="submit" className={`tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800`}>
+                                <button type="submit" className={`tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800 tw-gap-1 tw-flex tw-items-center tw-justify-center`}>
+                                    {isProcessing === true &&
+                                        <Spinner animation="border" variant="light" size='sm' />
+                                    }
                                     Update Details
                                 </button>
                             </div>

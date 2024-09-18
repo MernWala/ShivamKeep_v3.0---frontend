@@ -4,13 +4,13 @@ import { Spinner } from 'react-bootstrap'
 import GenralContext from '../../context/GenralContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const Page = () => {
 
     let navigate = useNavigate()
 
-    const { registrationTempState, backendHost, isForgotPassword } = useContext(GenralContext)
+    const { registrationTempState, setRegistrationTempState, backendHost, isForgotPassword, setIsForgotPassword } = useContext(GenralContext)
 
     const [formProcess, setFormProcess] = useState(false)
     const [formState, setFormState] = useState('')
@@ -20,6 +20,20 @@ const Page = () => {
 
     const [formData, setFormData] = useState("")
     const [formResponse, setFormResponse] = useState()
+
+    const [params] = useSearchParams()
+    const [cardTitle] = useState(() => {
+        if (params.get("access") === "VerifyAccount") {
+            setRegistrationTempState(params.get("email"))
+            return "Please validate email"
+        } else if (params.get("access") === "AccountRecovery") {
+            setRegistrationTempState(params.get("email"))
+            setFormData(params.get("email"))
+            setIsForgotPassword(true)
+            return "Enter you email"
+        }
+    })
+
     const handleSendOTP = async (e) => {
         e.preventDefault();
 
@@ -99,7 +113,7 @@ const Page = () => {
 
             let response = await axios.post(`${backendHost}/api/recover`, {
                 email: formData,
-                url: `http://localhost:3000/#/account/change-password`
+                url: `${window?.location?.origin}/#/account/change-password`
             })
 
             if (response?.status === 201) {
@@ -132,7 +146,7 @@ const Page = () => {
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto md:tw-h-screen lg:tw-py-0">
                     <div className="tw-w-full tw-rounded-lg tw-shadow dark:tw-border md:tw-mt-0 sm:tw-max-w-md tw-xl:p-0 dark:tw-bg-gray-800 dark:tw-border-gray-700">
                         <div className='tw-p-6 sm:tw-p-8 pb-0'>
-                            <h1 className="tw-text-xl tw-mb-0 tw-font-semibold tw-leading-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white tw-tracking-wider">Enter your email</h1>
+                            <h1 className="tw-text-xl tw-mb-0 tw-font-semibold tw-leading-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white tw-tracking-wider">{cardTitle}</h1>
                         </div>
                         <form className={`tw-p-6 tw-space-y-5 md:tw-space-y-7 sm:tw-p-8 ${otpDetails && 'pb-0'}`} onSubmit={isForgotPassword === true ? handleForgotPassword : handleSendOTP}>
                             <div className='tw-space-y-2 md:tw-space-y-3'>

@@ -2,7 +2,6 @@ import React from 'react'
 import { FaNoteSticky } from "react-icons/fa6";
 import Avatar from './Avatar';
 import { NavLink } from 'react-router-dom'
-import ShareButton from './ShareButton';
 
 const Header = ({
 
@@ -28,7 +27,6 @@ const Header = ({
                         </div>
                         :
                         <div className={'tw-rounded-full tw-flex tw-items-center tw-outline-none'}>
-                            <ShareButton />
                             <Avatar />
                         </div>
                     }

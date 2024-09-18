@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import GenralContext from '../context/GenralContext'
 import EditProfileOffCanvas from './EditProfileOffCanvas';
+import ShareButton from './ShareButton';
 
 const Avatar = () => {
 
@@ -33,7 +34,7 @@ const Avatar = () => {
         <>
             <EditProfileOffCanvas show={editProfile?.show} setState={setEditProfile} />
             <Dropdown>
-                <Dropdown.Toggle variant='' id="avatar-dropdown" className='tw-leading-[0]'>
+                <Dropdown.Toggle variant='' id="avatar-dropdown" className='tw-leading-[0] p-0'>
                     <div className="tw-relative">
                         <div className="tw-relative tw-inline-block tw-rounded-full tw-overflow-hidden tw-h-9 tw-w-9 md:tw-h-11 md:tw-w-11 tw-border-2 tw-border-indigo-800">
                             <img
@@ -50,6 +51,9 @@ const Avatar = () => {
                         <span className='tw-px-2 tw-py-1 text-truncate tw-block tw-max-w-40 tw-text-neutral-50'>
                             Welcome <span className="tw-font-semibold"> {userDetails?.name} </span>
                         </span>
+                    </div>
+                    <div>
+                        <ShareButton />
                     </div>
                     <div className='p-0' onClick={() => { setEditProfile({ show: true }) }}>
                         <button className='tw-outline-none hover:tw-font-semibold tw-w-full py-1 tw-text-start tw-px-4' type="button">Edit Profile</button>

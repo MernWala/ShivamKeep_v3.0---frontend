@@ -96,7 +96,9 @@ const Home = () => {
                         })}
 
                         {notes?.length === 0 &&
-                            <span className='tw-text-indigo-700 tw-capitalize'>No notes available! Try to add some by clicking right bottom button</span>
+                            <div className='tw-min-h-96 tw-flex tw-items-center'>
+                                <span className='tw-text-indigo-700 tw-capitalize tw-block text-center'>No notes available! Try to add some by clicking right bottom button</span>
+                            </div>
                         }
                     </div>
                 </div>
