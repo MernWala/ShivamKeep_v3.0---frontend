@@ -69,7 +69,7 @@ const Page = () => {
                                     type={passEye === true ? 'password' : 'text'}
                                     name="pass"
                                     id="password"
-                                    placeholder="••••••••"
+                                    placeholder="Passsword"
                                     className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
                                     onChange={(e) => { handleOnChange(e, formData, setFormData) }}
                                     autoComplete="true"
@@ -87,7 +87,7 @@ const Page = () => {
                                     type='password'
                                     name="rePass"
                                     id="repassword"
-                                    placeholder="••••••••"
+                                    placeholder="Re-enter Passsword"
                                     className="tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 tw-border tw-border-gray-300 tw-text-gray-900 tw-rounded-lg focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
                                     onChange={(e) => { handleOnChange(e, formData, setFormData) }}
                                     autoComplete="true"

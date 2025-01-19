@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FaGithub } from 'react-icons/fa'
-import { FcGoogle } from 'react-icons/fc'
 import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri'
 import { Loader } from '../components/BootstrapModals'
 import axios from 'axios'
@@ -92,9 +90,9 @@ const Auth = () => {
     }
 
     return (
-        <section className={`tw-bg-gray-50 dark:tw-bg-gray-900 tw-min-h-[100vh] ${authType === 'REGISTER' && 'tw-py-10'}`}>
+        <section className={`tw-bg-gray-50 tw-content-center dark:tw-bg-gray-900 tw-min-h-[100vh]`}>
             <Loader show={formProcess} text={formStatus} />
-            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto">
+            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-px-6 tw-py-8 tw-mx-auto tw-h-full">
                 <div className="tw-w-full tw-rounded-lg tw-shadow dark:tw-border md:tw-mt-0 sm:tw-max-w-md tw-xl:p-0 dark:tw-bg-gray-800 dark:tw-border-gray-700">
                     <div className="tw-p-6 tw-space-y-4 md:tw-space-y-6 sm:tw-p-8">
                         <h1 className="tw-text-center tw-text-xl tw-font-bold tw-leading-tight tw-tracking-tight tw-text-gray-900 md:tw-text-2xl dark:tw-text-white">
@@ -149,26 +147,21 @@ const Auth = () => {
                                         }
                                     </button>
                                 </div>
+                                {authType === 'LOGIN' &&
+                                    <div className="tw-flex tw-items-center tw-justify-between tw-mt-2">
+                                        <button
+                                            type="button"
+                                            className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none"
+                                            onClick={handleForgotPassword}
+                                        >
+                                            Forgot password?
+                                        </button>
+                                    </div>
+                                }
                             </div>
 
-                            {authType === 'LOGIN' &&
-                                <div className="tw-flex tw-items-center tw-justify-between">
-                                    <button
-                                        type="button"
-                                        className="tw-border tw-border-transparent focus:tw-border-white tw-rounded-[3px] tw-px-3 tw-text-sm tw-font-medium tw-text-primary-600 tw-hover:underline dark:tw-text-primary-500 focus:tw-outline-none"
-                                        onClick={handleForgotPassword}
-                                    >
-                                        Forgot password?
-                                    </button>
-                                </div>
-                            }
-
                             <button type="submit" className={`tw-w-full tw-text-white tw-bg-primary-600 tw-hover:bg-primary-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-primary-300 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center dark:tw-bg-primary-600 dark:tw-hover:bg-primary-700 dark:focus:tw-ring-primary-800`}>
-                                {authType === 'LOGIN' ?
-                                    <>Sign in</>
-                                    :
-                                    <>Register</>
-                                }
+                                {authType === 'LOGIN' ? <>Sign in</> : <>Register</>}
                             </button>
 
                             <p className="tw-text-sm tw-font-light tw-text-gray-500 dark:tw-text-gray-400 tw-text-center">
@@ -185,31 +178,6 @@ const Auth = () => {
                                     }
                                 </button>
                             </p>
-
-                            <div className='tw-my-5 tw-flex tw-justify-center tw-items-center tw-gap-2'>
-                                <p className='tw-m-0 tw-w-[25%] tw-bg-white tw-border'></p>
-                                <span className="tw-text-white tw-text-xs">Or</span>
-                                <p className='tw-m-0 tw-w-[25%] tw-bg-white tw-border'></p>
-                            </div>
-
-                            <div className='tw-flex tw-flex-wrap'>
-                                <div className="md:tw-w-1/2 tw-w-full">
-                                    <div className="tw-p-2">
-                                        <button type='button' className='tw-capitalize tw-flex tw-gap-1 tw-text-sm tw-items-center tw-justify-center tw-bg-gray-50 focus:tw-outline-none tw-border-2 tw-border-transparent tw-border-gray-300 tw-text-neutral-50 tw-rounded-lg tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 focus:tw-border-primary-600'>
-                                            continue with
-                                            <FcGoogle className='tw-text-xl' />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="md:tw-w-1/2 tw-w-full">
-                                    <div className="tw-p-2">
-                                        <button type='button' className='tw-capitalize tw-flex tw-gap-1 tw-text-sm tw-items-center tw-justify-center tw-bg-gray-50 focus:tw-outline-none tw-border-2 tw-border-transparent tw-border-gray-300 tw-text-neutral-50 tw-rounded-lg tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 focus:tw-border-primary-600'>
-                                            continue with
-                                            <FaGithub className='tw-text-xl' />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>
