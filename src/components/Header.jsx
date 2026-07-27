@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaNoteSticky } from "react-icons/fa6";
 import Avatar from './Avatar';
 import { NavLink } from 'react-router-dom'

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Notes from '../components/Notes'
 import Header from '../components/Header'
 import axios from 'axios'

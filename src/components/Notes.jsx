@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { MdDeleteSweep, MdEditSquare, MdFullscreen, MdShare, MdWarning } from 'react-icons/md';
 import GenralContext from '../context/GenralContext';

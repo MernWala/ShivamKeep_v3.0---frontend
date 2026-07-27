@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import GenralContext from '../context/GenralContext'
 import { Spinner } from 'react-bootstrap';

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import NewBtn from '../components/NewBtn'
 import Notes from '../components/Notes'
 import Header from '../components/Header'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import GenralContext from './GenralContext'
 
 const GenralState = (props) => {
@@ -22,8 +22,6 @@ const GenralState = (props) => {
 
     const [loaderData, setLoaderData] = useState({})
 
-    const [editProfile, setEditProfile] = useState({})
-
     const [registrationTempState, setRegistrationTempState] = useState()
 
     const [isForgotPassword, setIsForgotPassword] = useState(false)
@@ -33,8 +31,7 @@ const GenralState = (props) => {
             {
                 backendHost, handleOnChange, userDetails, setUserDetails, notes, setNotes, modifyNotes,
                 setModifyNotes, fullScreenInfo, setfullScreenInfo, Offcanvas, setOffcanvas, loaderData,
-                setLoaderData, editProfile, setEditProfile, registrationTempState, setRegistrationTempState,
-                isForgotPassword, setIsForgotPassword
+                setLoaderData, registrationTempState, setRegistrationTempState, isForgotPassword, setIsForgotPassword
             }
         }>
             {props.children}

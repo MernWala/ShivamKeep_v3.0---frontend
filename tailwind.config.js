@@ -1,8 +1,5 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{html,js,jsx}"
-  ],
+export default {
+  content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {
       colors: {
@@ -55,9 +52,9 @@ module.exports = {
           'Segoe UI Symbol',
           'Noto Color Emoji'
         ]
-      }
-    }
+      },
+    },
   },
   plugins: [],
-  prefix: "tw-"
+  prefix: "tw-",
 }

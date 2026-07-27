@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import GenralContext from '../context/GenralContext'
 
 const ShareButton = () => {

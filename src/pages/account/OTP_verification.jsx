@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Loader } from '../../components/BootstrapModals'
 import { Spinner } from 'react-bootstrap'
 import GenralContext from '../../context/GenralContext'
@@ -98,8 +98,6 @@ const Page = () => {
             } else {
                 toast.error("Somthing went wrong")
             }
-
-        } finally {
 
         }
     }

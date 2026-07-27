@@ -1,4 +1,3 @@
-import React from 'react'
 import { Spinner } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import '../styles/modalsConfig.css';
