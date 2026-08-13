@@ -26,3 +26,6 @@ dist-ssr
 # Ignoring package lock files
 yarn.lock
 package-lock.json
+
+.env
+.vite

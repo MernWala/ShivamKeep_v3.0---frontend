@@ -2,16 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure dropdown popovers have a background and visible border */
+div[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}
+
+/* 2. Scope dropdown styling ONLY to MDXEditor popups */
+.mdxeditor-popup-container,
+[data-mdxeditor-dialog],
+.mdxeditor [role="menu"],
+.mdxeditor [role="listbox"] {
+  z-index: 9999 !important;
+}
+
 a {
   text-decoration: none !important;
-}
-
-#avatar-dropdown::after {
-  content: unset;
-}
-
-#avatar-dropdown {
-  border: 0 !important;
 }
 
 .no-spinner::-webkit-outer-spin-button,
@@ -22,10 +27,6 @@ a {
 
 .no-spinner {
   -moz-appearance: textfield;
-}
-
-.btn-close {
-  filter: invert(1);
 }
 
 /* ========================= CUSTOM SCROLL BAR ========================= */
@@ -52,13 +53,4 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
-}
-
-.modal-content {
-  border: unset !important;
-  border-radius: 0.25rem !important;
-}
-
-.modal {
-  backdrop-filter: blur(4px) brightness(0.5);
 }
