@@ -1,6 +1,6 @@
 import { NewNotesObject, Note } from "../schemas/interface"
 import { IoIosCloseCircle } from 'react-icons/io'
-import React, { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
+import React, { ChangeEvent, ReactNode, useMemo, useRef, useState, useEffect, startTransition } from 'react'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { MDXEditorMethods } from '@mdxeditor/editor';
 import { Editor } from './Editor';
@@ -71,9 +71,19 @@ export const NoteCreateUpdateModal = ({ show, action, note, setShow }: {
     const [createNote] = useAddNoteMutation();
     const [updateNote] = useUpdateNoteMutation();
     const editorRef = useRef<MDXEditorMethods>(null);
-    const [defaultNoteValue] = useState<NewNotesObject>({ title: "", shared: false, tags: [], notes: "" });
+    const defaultNoteValue = useMemo<NewNotesObject>(() => ({ title: "", shared: false, tags: [], notes: "" }), []);
     const [modalTitle] = useState<string>(action === 'create' ? 'Create Note' : 'Update Note');
     const [formData, setFormData] = useState<NewNotesObject | Note>(() => action === 'create' ? defaultNoteValue : (note ?? defaultNoteValue));
+
+    useEffect(() => {
+        startTransition(() => {
+            if (action === 'create') {
+                setFormData(defaultNoteValue);
+            } else {
+                setFormData(note ?? defaultNoteValue);
+            }
+        });
+    }, [note, action, show, defaultNoteValue]);
 
     const close = () => {
         setShow(false)
@@ -148,7 +158,7 @@ export const NoteCreateUpdateModal = ({ show, action, note, setShow }: {
                                 placeholder={"Tilte goes here"}
                                 className={"ring-1 focus:ring-2 outline-none rounded px-2 py-1 ring-indigo-600 w-full"}
                                 onChange={handleOnChange}
-                                defaultValue={formData?.title}
+                                value={formData?.title ?? ""}
                             />
                         </div>
                         <div className='mb-3'>
@@ -158,13 +168,14 @@ export const NoteCreateUpdateModal = ({ show, action, note, setShow }: {
                                 placeholder={"Tags (Example: Daily Task, Today'd deadline, Todo, etc."}
                                 className={"ring-1 focus:ring-2 outline-none rounded px-2 py-1 ring-indigo-600 w-full"}
                                 onChange={handleOnChange}
-                                defaultValue={formData?.tags}
+                                value={Array.isArray(formData?.tags) ? formData.tags.join(", ") : (formData?.tags ?? "")}
                             />
                         </div>
                         <div className='mb-3'>
                             <Editor
+                                key={`editor-${formData ?? 'new'}-${String(formData?.notes ?? '').length}`}
                                 editorRef={editorRef}
-                                initialMarkdown={formData?.notes}
+                                initialMarkdown={formData?.notes ?? ""}
                                 onChange={(newMarkdown) => debouncedUpdate('notes', newMarkdown)}
                                 className="ring-1 focus:ring-2 outline-none rounded ring-indigo-600 w-full"
                             />
