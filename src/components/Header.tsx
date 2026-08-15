@@ -9,7 +9,7 @@ const Header = (
   return (
     <header className="text-gray-600 body-font border-b bg-neutral-50 sticky top-0 z-10">
       <div className="mx-auto flex flex-wrap py-1 px-5 items-center">
-        <NavLink to="/post-login" className="flex title-font font-medium items-center text-gray-900">
+        <NavLink to="/app" className="flex title-font font-medium items-center text-gray-900">
           <FaNoteSticky size={35} className='text-indigo-900' />
           <span className="select-none ml-2 text-2xl font-bold text-indigo-800">Shivam Keep</span>
         </NavLink>

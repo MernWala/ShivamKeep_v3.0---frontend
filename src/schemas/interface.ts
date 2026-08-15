@@ -3,7 +3,10 @@ export interface User {
     name: string;
     email: string;
     isVerified: boolean;
-    picture?: string;
+    picture?: {
+        type: 'Buffer';
+        data: number[];
+    } | string;
     githubId?: string
 }
 

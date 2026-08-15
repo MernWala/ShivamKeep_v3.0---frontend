@@ -1,8 +1,18 @@
 import { Navigate, Outlet } from 'react-router';
 import { useLoginWithTokenQuery } from '../store/rtk/auth.api';
+import { useAppSelector } from '../store/hooks';
 
 export function ProtectedRoute() {
-    const { data: response, isLoading, isError } = useLoginWithTokenQuery();
+    const { user } = useAppSelector((state) => state.auth);
+
+    const { data: response, isLoading, isError } = useLoginWithTokenQuery(undefined, {
+        skip: !user,
+    });
+
+    if (!user) {
+        return <Navigate to="/auth" replace />;
+    }
+
     if (isLoading) {
         return <>Authenticating</>;
     }

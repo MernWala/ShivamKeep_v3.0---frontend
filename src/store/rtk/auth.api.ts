@@ -4,7 +4,6 @@ import { type RootState } from '../store';
 import { config } from '../../../config';
 import { logout as authLogout, setCredentials } from '../slices/authSlice';
 
-
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
@@ -67,12 +66,32 @@ export const authApi = createApi({
                     const { data: result } = await queryFulfilled;
                     if (result?.status === 200) {
                         dispatch(authLogout());
+                        dispatch(authApi.util.resetApiState());
                     }
                 } catch {
                     // no-op
                 }
             },
         }),
+        updateProfile: builder.mutation<ApiResponse, Blob>({
+            query: (blob) => {
+                return {
+                    url: '/auth',
+                    method: 'PATCH',
+                    body: blob,
+                };
+            },
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data: result } = await queryFulfilled;
+                    if (result?.status === 200 && result.data?.token && result.data?.user) {
+                        dispatch(setCredentials({ user: result.data.user, token: result.data.token }));
+                    }
+                } catch {
+                    // no-op
+                }
+            }
+        })
     }),
 });
 
@@ -81,4 +100,5 @@ export const {
     useRegisterMutation,
     useLogoutMutation,
     useLoginWithTokenQuery,
+    useUpdateProfileMutation,
 } = authApi;
