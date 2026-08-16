@@ -91,6 +91,24 @@ export const authApi = createApi({
                     // no-op
                 }
             }
+        }),
+        sendRecoveryLink: builder.mutation<ApiResponse, string>({
+            query: (email) => {
+                return {
+                    url: '/auth/recover',
+                    method: 'POST',
+                    body: { email },
+                };
+            },
+        }),
+        resetPassword: builder.mutation<ApiResponse, { newPassowrd: string, recoveryToken: string }>({
+            query: ({ newPassowrd, recoveryToken }) => {
+                return {
+                    url: '/auth/update-password',
+                    method: 'POST',
+                    body: { newPassowrd, recoveryToken },
+                };
+            },
         })
     }),
 });
@@ -101,4 +119,6 @@ export const {
     useLogoutMutation,
     useLoginWithTokenQuery,
     useUpdateProfileMutation,
+    useSendRecoveryLinkMutation,
+    useResetPasswordMutation,
 } = authApi;

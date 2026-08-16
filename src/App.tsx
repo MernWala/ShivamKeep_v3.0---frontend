@@ -3,6 +3,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Auth } from './pages/Auth';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
+import { Recovery } from './pages/Recovery';
 
 export default function App() {
   return (
@@ -11,7 +12,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/auth" />} />
 
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth">
+          <Route index element={<Auth />} />
+          <Route path="recover/:token" element={<Recovery />} />
+        </Route>
 
         <Route element={<ProtectedRoute />}>
           <Route path="/app" element={<Dashboard />} />

@@ -20,7 +20,7 @@ export interface Note {
     updatedAt?: Date;
 }
 
-export type AuthMode = 'Login' | 'Register';
+export type AuthMode = 'Login' | 'Register' | 'Recovery';
 
 export interface ApiResponseData {
     token?: string;
